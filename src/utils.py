@@ -15,6 +15,23 @@ def get_graph_from_file(filename):
 
   return n_nodes, n_edges, edges
 
+
+def encode_graph(n, e, edges):
+  graph_encoded = []
+  for i in range(n):
+    list = []
+    for j in range(n):
+      list.append(False)
+    graph_encoded.append(list)
+
+  for i in range(e):
+    [x, y] = edges[i]
+    graph_encoded[x - 1][y - 1] = True
+
+  return graph_encoded
+
 if __name__ == '__main__':
   filename = "../graphs/g1.txt"
   n, e, edges = get_graph_from_file(filename)
+  graph_encoded = encode_graph(n, e, edges)
+  print(graph_encoded)
