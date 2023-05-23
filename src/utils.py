@@ -26,7 +26,7 @@ def encode_graph(n, e, edges):
 
   for i in range(e):
     [x, y] = edges[i]
-    graph_encoded[x - 1][y - 1] = True
+    graph_encoded[x][y] = True
 
   return graph_encoded
 
