@@ -90,12 +90,13 @@ def printCnf(cls):
 
 # This function is invoked when the python script is run directly and not imported
 if __name__ == '__main__':
-  #if not (os.path.isfile(SATsolver) and os.access(SATsolver, os.X_OK)):
-  # if Z3 is installed with homebrew in the PATH env no need to explicitly specify the solver
-  #    print "Set the path to SATsolver correctly on line 4 of this file (%s)" % sys.argv[0]
-  #    sys.exit(1)
-  filename = "../graphs/g1.txt"
-  n_nodes, n_edges, graph = get_graph_from_file(filename)
+  # This is for reading in the arguments.
+  if len(sys.argv) != 2:
+    print("Usage: %s <filepath>" % sys.argv[0])
+    sys.exit(1)
+
+  filepath = sys.argv[1]
+  n_nodes, n_edges, graph = get_graph_from_file(filepath)
   graph_encoded = encode_graph(n_nodes, n_edges, graph)
 
   vars = gen_vars(n_nodes)
@@ -132,6 +133,13 @@ if __name__ == '__main__':
     facts = map(lambda x: varToStr[abs(x)], filter(lambda x: x > 0, asgn))
 
     # Print the solution
+    solution = ""
     for f in facts:
       print(f)
+      solution += f[-1] + " "
 
+    # Save the solution
+    solution_filepath = filepath.replace("graphs/", "graphs/outputs/")
+    output = open(solution_filepath, "w")
+    output.write(solution)
+    output.close()
