@@ -3,11 +3,19 @@
     <div class="logo">
       <h1> Formula Hamilton </h1>
     </div>
-    <v-btn icon>
-      <v-icon @click="emitMenuClicked">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>menu</title><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
-      </v-icon>
-    </v-btn>
+    <div class="navbarContainer">
+      <navbar class="navbar">
+        <li>
+          <a href="/"><b>Home</b></a>
+        </li>
+        <li>
+          <a href="/about"><b>About</b></a>
+        </li>
+        <li>
+          <a href="/projects"><b>Projects</b></a>
+        </li>
+      </navbar>
+    </div>
   </div>
   
 </template>
@@ -15,55 +23,79 @@
 <script>
 
 export default {
-  name: 'HeaderApp',
-  methods: {
-    emitMenuClicked() {
-      this.$root.$emit('menuClicked');
-    },
-  }
+  name: 'HeaderApp'
 }
 
 </script>
 
 <style scoped>
 
-
 .container {
   height: 10vh;
-  width: 100%;
-  top: 0;
-  left: 0;
+  min-height: 10vh;
+  width: 100vw;
+  min-width: 100vw;
   display: flex;
-  background-color: beige;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
-  text-align: center;
+  background-color: beige;
 }
 
 .logo {
+  height: 10vh;
+  min-height: 10vh;
+  display: flex;
+  position: absolute;
+  left: 2%;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbarContainer {
+  height: 10vh;
+  min-height: 10vh;
   width: 100vw;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
+}
+
+.navbar {
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10vh;
+  width: 30vw;
+  margin-right: 10px;
+  min-height: 10vh;
+
+}
+
+.navbar li {
+  list-style: none; 
+  height: 60%;
+  width: 30%;
+  display: flex;
   justify-content: center;
-  text-align: center;
-  z-index: 0;
+  align-items: center;
+  border-radius: 10%;
 }
 
 
-h1 {
-  font-size: 40px;
-  font-weight: bold;
-  color: black;
-
+.navbar li a {
+  text-decoration: none; /* Remove the default link underline */
+  color: black; /* Set the color of the navbar links */
+  font-size: 1.2em;
 }
 
-.v-btn {
-  top: 50;
-  right:0;
-  margin-left: auto;
-  margin-right: 20px;
-  color: black;
-  z-index: 2;
+
+.navbar li:hover {
+  background-color: rgb(157, 141, 94); /* Set the background color for hover effect */
+  transition-delay: 0.12s; 
 }
- 
+
+
 
 </style>

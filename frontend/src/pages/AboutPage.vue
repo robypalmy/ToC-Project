@@ -1,4 +1,5 @@
 <template>
+  <HeaderApp/>
   <div class="about-page">
     <h1>About Page</h1>
     <div class="card-container">
@@ -26,9 +27,28 @@
   </div>
 </template>
 
+<script>
+
+import HeaderApp from '../components/Header/HeaderApp';
+
+export default {
+  name: 'AboutPage',
+  components: {
+    HeaderApp
+  }
+}
+
+
+</script>
+
+
+
 <style scoped>
+
+
+
 .about-page {
-  height: 100vh; /* Set the height to fill the entire viewport */
+  height: 90vh; /* Set the height to fill the entire viewport */
   display: flex;
   flex-direction: column;
   align-items: center;
