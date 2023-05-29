@@ -1,25 +1,19 @@
 <template>
-  <v-app>
-    <v-app-bar app class="my-app-bar">
-      <HeaderApp/>
-    </v-app-bar>
-    <v-main>
-      <!--  <img alt="Vue logo" src="./assets/logo.png">-->
-      <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-      <InputFile/>
-    </v-main>
+  <v-app class="appl">
+    <HeaderApp/>
+    <MainContent/>
   </v-app>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import InputFile from './components/InputFile.vue'
-import HeaderApp from './components/HeaderApp.vue'
+// import He lloWorld from './components/HelloWorld.vue'
+import MainContent from './components/Main/MainContent.vue'
+import HeaderApp from './components/Header/HeaderApp.vue'
 
 export default {
   name: 'App',
   components: {
-    InputFile,
+    MainContent,
     HeaderApp
   }
 }
@@ -29,26 +23,37 @@ export default {
 
 
 
-#app {
+.appl {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin: 50px;
-  
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+  height: 100px;
+  display: flex;
+}
+
+.myAppBar {
+  height: 100px;
 }
 
 
 #main {
   display: flex;
+  padding-top:10%;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: #2c3e50;
 
 }
+
 
 
 
