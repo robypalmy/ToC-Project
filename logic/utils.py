@@ -26,7 +26,10 @@ def encode_graph(n, e, edges):
 
   for i in range(e):
     [x, y] = edges[i]
+
+    # Undirected Graph
     graph_encoded[x][y] = True
+    graph_encoded[y][x] = True
 
   return graph_encoded
 
