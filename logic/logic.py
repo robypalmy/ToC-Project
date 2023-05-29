@@ -136,7 +136,8 @@ if __name__ == '__main__':
     solution = ""
     for f in facts:
       print(f)
-      solution += f[-1] + " "
+      fparts = f.split("_")
+      solution += fparts[-1] + " "
 
     # Save the solution
     solution_filepath = filepath.replace("graphs/", "graphs/outputs/")
