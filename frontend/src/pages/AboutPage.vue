@@ -1,5 +1,4 @@
 <template>
-  <HeaderApp/>
   <div class="about-page">
     <h1>About Page</h1>
     <div class="card-container">
@@ -29,13 +28,8 @@
 
 <script>
 
-import HeaderApp from '../components/Header/HeaderApp';
-
 export default {
-  name: 'AboutPage',
-  components: {
-    HeaderApp
-  }
+  name: 'AboutPage'
 }
 
 

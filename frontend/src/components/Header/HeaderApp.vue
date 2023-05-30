@@ -5,14 +5,14 @@
     </div>
     <div class="navbarContainer">
       <navbar class="navbar">
-        <li>
-          <a href="/"><b>Home</b></a>
+        <li @click="redirectToHome">
+          <a href="#"><b>Home</b></a>
         </li>
-        <li>
-          <a href="/about"><b>About</b></a>
+        <li @click="redirectToAbout">
+          <a href="#"><b>About</b></a>
         </li>
-        <li>
-          <a href="/projects"><b>Projects</b></a>
+        <li @click="redirectToProjects">
+          <a href="#"><b>Projects</b></a>
         </li>
       </navbar>
     </div>
@@ -23,8 +23,21 @@
 <script>
 
 export default {
-  name: 'HeaderApp'
-}
+  name: 'HeaderApp',
+  methods: {
+    redirectToHome() {
+      this.$router.push('/');
+    },
+    redirectToAbout() {
+      // Redirect to the 'about' route
+      this.$router.push('/about');
+    },
+    redirectToTeam() {
+      // Redirect to the 'about' route
+      this.$router.push('/team');
+    }
+  }
+};
 
 </script>
 
