@@ -129,8 +129,11 @@ if __name__ == '__main__':
   # Run Z3 solver
   res = runSATsolver()
 
+  solution_filepath = filepath.replace("graphs/", "graphs/outputs/")
+  output = open(solution_filepath, "w")
+
   # if it was satisfiable, we want to have the assignment printed out
-  if res[0] == "s SATISFIABLE":
+  if res[0] == "s SATISFIABLE" or res[0] == "sat":
     # First get the assignment, which is on the second line of the file, and split it on spaces
     # Read the solution
     asgn = map(int, res[1].split()[1:])
@@ -148,8 +151,9 @@ if __name__ == '__main__':
       fparts = f.split("_")
       solution += fparts[-1] + " "
 
-    # Save the solution
-    solution_filepath = filepath.replace("graphs/", "graphs/outputs/")
-    output = open(solution_filepath, "w")
+    output.write("SATISFIABLE\n")
     output.write(solution)
-    output.close()
+  else:
+    output.write("UNSATISFIABLE\n")
+    print(res)
+  output.close()
