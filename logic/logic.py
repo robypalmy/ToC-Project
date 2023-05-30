@@ -37,6 +37,15 @@ def gen_vars(n):
 def genPigConstr(n_nodes, vars, graph):
   clauses = []
 
+  # Two nodes in sequence need to have a edge
+  for node_i in range(0, n_nodes):
+    for node_j in range(0, n_nodes):
+      if not graph[node_i][node_j]:
+        for position in range(0, n_nodes):
+          varName1 = varName(str(position), str(node_i))
+          varName2 = varName(str((position + 1) % n_nodes), str(node_j))
+          clauses.append([-vars[varName1], -vars[varName2]])
+
   # Each position has to be occupied
   for position in range(n_nodes):
     clause = []
@@ -67,17 +76,32 @@ def genPigConstr(n_nodes, vars, graph):
         varName2 = varName(str(position_j), str(node))
         clauses.append([-vars[varName1], -vars[varName2]])
 
-  # Two nodes in sequence need to have a edge
-  for node_i in range(0, n_nodes):
-    for node_j in range(0, n_nodes):
-      if not graph[node_i][node_j]:
-        for position in range(0, n_nodes):
-          varName1 = varName(str(position), str(node_i))
-          varName2 = varName(str((position + 1) % n_nodes), str(node_j))
-          clauses.append([-vars[varName1], -vars[varName2]])
-
   return clauses
 
+def generateClausesFile(n_nodes, graph_encoded):
+  vars = gen_vars(n_nodes)
+  rules = genPigConstr(n_nodes, vars, graph_encoded)
+
+  head = printHeader(len(rules))
+  rls = printCnf(rules)
+
+  # here we create the cnf file for SATsolver
+  fl = open("tmp_prob.cnf", "w")
+  fl.write("\n".join([head, rls]))
+  fl.close()
+
+def runSATsolver():
+  # this is for runing SATsolver
+  ms_out = Popen(["z3 tmp_prob.cnf"], stdout=PIPE, shell=True).communicate()[0]
+
+  # SATsolver with these arguments writes the solution to a file called "solution".  Let's check it
+  #res = open("solution", "r").readlines()
+  res = ms_out.decode('utf-8')
+  # Print output
+  #print(res)
+  res = res.strip().split('\n')
+
+  return res
 
 # A helper function to print the cnf header
 def printHeader(n):
@@ -99,26 +123,11 @@ if __name__ == '__main__':
   n_nodes, n_edges, graph = get_graph_from_file(filepath)
   graph_encoded = encode_graph(n_nodes, n_edges, graph)
 
-  vars = gen_vars(n_nodes)
-  rules = genPigConstr(n_nodes, vars, graph_encoded)
+  # Create CNF Clauses
+  generateClausesFile(n_nodes, graph_encoded)
 
-  head = printHeader(len(rules))
-  rls = printCnf(rules)
-
-  # here we create the cnf file for SATsolver
-  fl = open("tmp_prob.cnf", "w")
-  fl.write("\n".join([head, rls]))
-  fl.close()
-
-  # this is for runing SATsolver
-  ms_out = Popen(["z3 tmp_prob.cnf"], stdout=PIPE, shell=True).communicate()[0]
-
-  # SATsolver with these arguments writes the solution to a file called "solution".  Let's check it
-  #res = open("solution", "r").readlines()
-  res = ms_out.decode('utf-8')
-  # Print output
-  print(res)
-  res = res.strip().split('\n')
+  # Run Z3 solver
+  res = runSATsolver()
 
   # if it was satisfiable, we want to have the assignment printed out
   if res[0] == "s SATISFIABLE":
@@ -136,7 +145,8 @@ if __name__ == '__main__':
     solution = ""
     for f in facts:
       print(f)
-      solution += f[-1] + " "
+      fparts = f.split("_")
+      solution += fparts[-1] + " "
 
     # Save the solution
     solution_filepath = filepath.replace("graphs/", "graphs/outputs/")
