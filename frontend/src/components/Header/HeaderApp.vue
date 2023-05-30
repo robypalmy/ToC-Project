@@ -8,11 +8,11 @@
         <li @click="redirectToHome">
           <a href="#"><b>Home</b></a>
         </li>
+        <li @click="redirectToGraphGenerator">
+          <a href="#"><b>Graph Generator</b></a>
+        </li>
         <li @click="redirectToAbout">
           <a href="#"><b>About</b></a>
-        </li>
-        <li @click="redirectToProjects">
-          <a href="#"><b>Projects</b></a>
         </li>
       </navbar>
     </div>
@@ -32,9 +32,9 @@ export default {
       // Redirect to the 'about' route
       this.$router.push('/about');
     },
-    redirectToTeam() {
+    redirectToGraphGenerator() {
       // Redirect to the 'about' route
-      this.$router.push('/team');
+      this.$router.push('/graphGenerator');
     }
   }
 };

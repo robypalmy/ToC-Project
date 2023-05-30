@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from '../App.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import About from './pages/AboutPage.vue';
+import GraphGenerator from './pages/GraphGenerator.vue';
 import HomeApp from './pages/Home.vue'; // Your root component
 
 // Vuetify
@@ -20,7 +21,7 @@ const router = createRouter({
   routes: [
     { path: '/', component: HomeApp },
     { path: '/about', component: About },
-    // { path: '/contact', component: Contact }
+    { path: '/graphGenerator', component: GraphGenerator }
   ],
 });
 
