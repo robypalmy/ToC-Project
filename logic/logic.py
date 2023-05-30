@@ -112,14 +112,8 @@ def printHeader(n):
 def printCnf(cls):
   return "\n".join(map(lambda x: "%s 0" % " ".join(map(str, x)), cls))
 
-# This function is invoked when the python script is run directly and not imported
-if __name__ == '__main__':
-  # This is for reading in the arguments.
-  if len(sys.argv) != 2:
-    print("Usage: %s <filepath>" % sys.argv[0])
-    sys.exit(1)
-
-  filepath = sys.argv[1]
+# Center the operation to find the path on graph
+def logic(filepath):
   n_nodes, n_edges, graph = get_graph_from_file(filepath)
   graph_encoded = encode_graph(n_nodes, n_edges, graph)
 
@@ -157,3 +151,15 @@ if __name__ == '__main__':
     output.write("UNSATISFIABLE\n")
     print(res)
   output.close()
+
+
+# This function is invoked when the python script is run directly and not imported
+if __name__ == '__main__':
+  # This is for reading in the arguments.
+  if len(sys.argv) != 2:
+    print("Usage: %s <filepath>" % sys.argv[0])
+    sys.exit(1)
+
+  filepath = sys.argv[1]
+  logic(filepath)
+
