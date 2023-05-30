@@ -1,8 +1,10 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-def function(filename):
-    output_file_name = filename.replace("graphs/", "graphs/outputs/")
+def graphPrinter(filename, output_file_name):
+    # output_file_name = filename.replace("graphs/", "graphs/outputs/")
+    # print("filename", filename)
+    # print("output_file_name", output_file_name)
     with open(filename, 'r') as file:
         data = file.readlines()
     with open(output_file_name, 'r') as file:
@@ -52,7 +54,10 @@ def function(filename):
     # Draw the graph
     pos = nx.spring_layout(G)  # Layout algorithm for node positioning
     nx.draw(G, pos, with_labels=True, node_color=color_map, edge_color=edge_colors)
-    plt.title('Graph Visualization')
+    # plt.title('Graph Visualization')
     # plt.show()
     # save the graph as a .png file
-    plt.savefig('images/' + filename + '.png')
+    image_name = filename.replace("../graphs/", "")
+    # print("image_name", image_name)
+    plt.savefig('images/' + image_name + '.png')
+    return "../images/" + image_name + ".png"

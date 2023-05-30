@@ -113,7 +113,7 @@ def printCnf(cls):
   return "\n".join(map(lambda x: "%s 0" % " ".join(map(str, x)), cls))
 
 # Center the operation to find the path on graph
-def logic(filepath):
+def logic_sat(filepath):
   n_nodes, n_edges, graph = get_graph_from_file(filepath)
   graph_encoded = encode_graph(n_nodes, n_edges, graph)
 
@@ -151,6 +151,7 @@ def logic(filepath):
     output.write("UNSATISFIABLE\n")
     print(res)
   output.close()
+  return solution_filepath
 
 
 # This function is invoked when the python script is run directly and not imported

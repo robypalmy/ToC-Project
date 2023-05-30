@@ -9,19 +9,20 @@ def upload():
     if 'file' in request.files:
         
         file = request.files['file']
-        print(file.filename)
-        
-        filename = "../graphs/" + file.filename
+        print("file.filename", file.filename)
+        print("file", file)
 
-        print(filename)
+        file_path = "../graphs/" + file.filename
+        file.save(file_path)
+    
+        solution_filepath = logic_sat(file_path)
 
-        logic_result = logic(filename)
+        print("sat result", solution_filepath)
 
-        print(logic_result)
+        image_path = graphPrinter(file_path, solution_filepath)
+        print("image_path", image_path)
 
-        function(filename)
-
-        return logic_result
+        return 0
     else:
         return "No file in request", 400
 
