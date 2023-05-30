@@ -1,36 +1,36 @@
 <!-- create a toolbar in vue with an input for a file -->
 <template>
     <v-content class="v-content">
-      <v-container fill-height>
-        <v-row style="margin: 0" justify="center">
-          <v-col cols="auto">
-            <v-card width="45vw" height="40vh" raised>
-              <v-card-title>Vuetify v-file-input Example:</v-card-title>
-              <br>
-              <v-card-text class="inputContainer">                
-                <v-file-input
-                  accept=".txt"
-                  label="Click here to select a .txt file"
-                  outlined
-                  v-model="chosenFiles"
-                  v-on:click="testFunction"
-                >
-                </v-file-input>
-              </v-card-text>
-              <v-card-actions class="btnContainer">
-                <v-btn right class="readFileBtn" @click="importTxt"><b>Read File</b></v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <v-col cols="auto">
-            <v-card width="45vw" height="40vh" raised>
-              <v-card-title>File contents:</v-card-title>
-              <v-card-text><p>{{file_content}}</p></v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
+    <v-container fill-height>
+      <v-row style="margin: 0" justify="center">
+        <v-col cols="auto">
+          <v-card width="45vw" height="40vh" raised>
+            <v-card-title>Vuetify v-file-input Example:</v-card-title>
+            <br>
+            <v-card-text class="inputContainer">                
+              <v-file-input
+                accept=".txt"
+                label="Click here to select a .txt file"
+                outlined
+                v-model="chosenFiles"
+                v-on:click="testFunction"
+              >
+              </v-file-input>
+            </v-card-text>
+            <v-card-actions class="btnContainer">
+              <v-btn right class="readFileBtn" @click="importTxt"><b>Read File</b></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col cols="auto">
+          <v-card width="45vw" height="40vh" raised>
+            <v-card-title>File contents:</v-card-title>
+            <v-card-text><p>{{ file_content }}</p></v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
 
 
     <div v-if="showPopup" class="popup-overlay">
@@ -49,7 +49,7 @@ export default {
   props: {
     msg: String
   },
-  data () {
+  data() {
     return {
       chosenFiles: null,
       file_content: null,
@@ -64,37 +64,50 @@ export default {
       console.log('Select File');
     },
     importTxt() {
-      console.log('importTxt');
-      // console.log(this.chosenFiles[0]);
       let file;
       try {
-        file = this.chosenFiles[0]
+        file = this.chosenFiles[0];
       } catch (e) {
         this.showPopup = true;
       }
-      if (!file) {console.log("No File Chosen")}
-      else {
-        let reader = new FileReader();
-        // Use the javascript reader object to load the contents of the file in the v-model prop
-        reader.onload = (res) => {
-          this.file_content = res.target.result;
-          console.log("content", this.file_content);
-        };
-        reader.onerror = (err) => console.log(err);
-        reader.readAsText(file);
-        // console.log("readre", reader);
+      if (!file) {
+        console.log("No File Chosen");
+      } else {
+        let formData = new FormData();
+        formData.append('file', file);
+
+        console.log(formData);
+        console.log(file);
+
+        fetch('http://127.0.0.1:5001/api/upload', {
+          method: 'POST',
+          body: formData,
+          mode: 'no-cors',
+        })
+          .then(response => {
+
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Request failed');
+            }
+          })
+          .then(responseData => {
+            // Handle the response from the backend
+            console.log(responseData);
+            // Update the file content in the frontend
+            this.file_content = responseData.file_content;
+          })
+          .catch(error => {
+            console.error(error);
+            console.log('Server response:', error.response); // Log the response for debugging
+          });
+        
       }
     },
-    mounted() {
-      console.log('mounted');
-      console.log(this.$refs.file);
-    },
-    created() {
-      console.log('created');
-      console.log(this.$refs.file);
-    }
   }
-} 
+}
+
 </script>
 
 <style scoped>
