@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
   format_data = "{}, {}, {}, {}, {:.8f},  {:.8f}\n"
 
-  for j in range(1, 9):
+  for j in range(1, 3):
     filepath = "../graphs/g" + str(j) + ".txt"
 
     n_nodes, n_edges, graph = get_graph_from_file(filepath)
