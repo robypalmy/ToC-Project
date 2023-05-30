@@ -2,3 +2,4 @@
 .idea/
 __pycache__/
 logic/tmp_prob.cnf
+data/tmp_prob.cnf
