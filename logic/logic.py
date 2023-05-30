@@ -147,7 +147,7 @@ if __name__ == '__main__':
     # Print the solution
     solution = ""
     for f in facts:
-      print(f)
+      #print(f)
       fparts = f.split("_")
       solution += fparts[-1] + " "
 

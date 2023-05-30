@@ -18,7 +18,6 @@ def generate_undirected_graph(N, E, output_file):
     for edge in edges:
       file.write(f"{edge[0]} {edge[1]}\n")
 
-
 def generate_graph_with_hamiltonian_cycle(N, E, output_file):
   if E < N or E > N * (N - 1) // 2:
     print("Invalid number of edges. The number of edges should be between N and N*(N-1)/2.")

@@ -74,7 +74,7 @@ class Graph():
     path[0] = 0
 
     if self.hamCycleUtil(path,1) == False:
-      print ("Solution does not exist\n")
+      #print ("Solution does not exist\n")
       return False
 
     #self.printSolution(path)
@@ -87,7 +87,6 @@ class Graph():
       print (vertex, end = " ")
     print (path[0], "\n")
 
-# This function is invoked when the python script is run directly and not imported
 if __name__ == '__main__':
   # This is for reading in the arguments.
   if len(sys.argv) != 2:

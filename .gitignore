@@ -3,3 +3,5 @@
 __pycache__/
 logic/tmp_prob.cnf
 data/tmp_prob.cnf
+data/resultsv1.csv
+data/results2.csv
