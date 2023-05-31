@@ -5,7 +5,7 @@
       <v-row style="margin: 0" justify="center">
         <v-col cols="auto">
           <v-card width="45vw" height="40vh" raised>
-            <v-card-title>Vuetify v-file-input Example:</v-card-title>
+            <v-card-title><b>Select your file:</b></v-card-title>
             <br>
             <v-card-text class="inputContainer">                
               <v-file-input
@@ -25,7 +25,11 @@
         <v-col cols="auto">
           <v-card width="45vw" height="40vh" raised>
             <v-card-title>File contents:</v-card-title>
-            <v-card-text><p>{{ file_content }}</p></v-card-text>
+              <v-card-text class="ciao">
+                <p>{{ file_contents }}</p>
+                <!-- Display image here -->
+                <img :src="imageSrc" alt="Image from backend" v-if="imageSrc" />
+              </v-card-text>
           </v-card>
         </v-col>
       </v-row>
@@ -44,6 +48,9 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
   name: 'InputFile',
   props: {
@@ -52,8 +59,10 @@ export default {
   data() {
     return {
       chosenFiles: null,
-      file_content: null,
+      file_contents: null,
       showPopup: false,
+      imageSrc: null,
+      resultString: null
     };
   },
   methods: {
@@ -76,37 +85,25 @@ export default {
         let formData = new FormData();
         formData.append('file', file);
 
-        console.log(formData);
-        console.log(file);
-
-        fetch('http://127.0.0.1:5001/api/upload', {
-          method: 'POST',
-          body: formData,
-          mode: 'no-cors',
+        axios.post('http://127.0.0.1:5001/api/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         })
-          .then(response => {
-
-            if (response.ok) {
-              return response.json();
-            } else {
-              throw new Error('Request failed');
-            }
-          })
-          .then(responseData => {
-            // Handle the response from the backend
-            console.log(responseData);
-            // Update the file content in the frontend
-            this.file_content = responseData.file_content;
-          })
-          .catch(error => {
-            console.error(error);
-            console.log('Server response:', error.response); // Log the response for debugging
-          });
-        
+        .then(response => {
+          console.log(response);
+          this.file_contents = response.data.file_contents;
+          this.imageSrc = 'http://127.0.0.1:5001' + response.data.image_path; 
+        })
+        .catch(error => {
+          console.error(error);
+        });
       }
-    },
+    }
   }
-}
+};
+
+
 
 </script>
 
@@ -168,9 +165,12 @@ export default {
 
 }
 
+.outputContainer {
 
-.inputContainer { 
-  
+  height: 100%;
+  width: 100%;
+  display: flex;
+
 }
 
 .file-card {

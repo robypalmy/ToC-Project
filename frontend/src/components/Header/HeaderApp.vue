@@ -81,6 +81,7 @@ export default {
   align-items: center;
   height: 10vh;
   width: 30vw;
+  text-align: center;
   margin-right: 10px;
   min-height: 10vh;
 
@@ -91,6 +92,7 @@ export default {
   height: 60%;
   width: 30%;
   display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
   border-radius: 10%;
