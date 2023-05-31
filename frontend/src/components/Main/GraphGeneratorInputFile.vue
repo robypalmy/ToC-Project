@@ -10,24 +10,24 @@
             <v-card-text class="inputContainer">                
               <div class="inputGroupContainer">
                 <div id="NodesNumberContainer">
-                  <input type="text" :class="{ 'inputboxlight': isDarkMode, 'inputboxdark': !isDarkMode }" id="NodesNumberInput" v-model="NodesInput" placeholder="Number of Nodes"/>
+                  <input type="text" id="NodesNumberInput" v-model="NodesInput" placeholder="Number of Nodes"/>
                 </div>
                 <div id="EdgesNumberContainer">
-                  <input type="text" :class="{ 'inputboxlight': isDarkMode, 'inputboxdark': !isDarkMode }" id="EdgesNumberInput" v-model="EdgesInput" placeholder="Number of Edges"/>
+                  <input type="text" id="EdgesNumberInput" v-model="EdgesInput" placeholder="Number of Edges"/>
                 </div>
                 <div id="FileNameContainer">
                   <input type="text" style="color:black" id="FileNameInput" v-model="FileNameInput" placeholder="File Name"/>
                 </div>
                 <div id="Hamiltonian">
                   <label id="label">
-                    <input type="checkbox" v-model="isCheckedA" @change="handleCheckboxChange('A')" />
-                    <b>Hamiltonian Cycle</b>
+                    <input type="checkbox"  v-model="isCheckedA" @change="handleCheckboxChange('A')" />
+                    <b :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }">Hamiltonian Cycle</b>
                   </label>
                 </div>
                 <div id="Random">
                   <label id="label">
                     <input type="checkbox" v-model="isCheckedB" @change="handleCheckboxChange('B')" />
-                    <b>Random</b>
+                    <b :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }" >Random</b>
                   </label>
                 </div>
               </div>

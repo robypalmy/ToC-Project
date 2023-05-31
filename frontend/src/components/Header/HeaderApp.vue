@@ -158,7 +158,7 @@ background-color: #3a332a;
   text-align: center;
   justify-content: center;
   align-items: center;
-  border-radius: 10%;
+  border-radius: 30px;
 }
 
 
