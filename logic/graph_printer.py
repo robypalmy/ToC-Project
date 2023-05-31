@@ -60,4 +60,6 @@ def graphPrinter(filename, output_file_name):
     image_name = filename.replace("../graphs/", "")
     # print("image_name", image_name)
     plt.savefig('images/' + image_name + '.png')
+    plt.clf()
+    plt.close()
     return "../images/" + image_name + ".png"

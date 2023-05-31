@@ -33,7 +33,7 @@
               </div>
             </v-card-text>
             <v-card-actions class="btnContainer">
-              <v-btn right class="readFileBtn" @click="UploadInfo"><b>Read File</b></v-btn>
+              <v-btn right class="readFileBtn" @click="UploadInfo"><b>Generate File</b></v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
