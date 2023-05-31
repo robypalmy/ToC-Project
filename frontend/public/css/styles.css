@@ -9,17 +9,15 @@
 }
 
 
-.light-mode-header {
+.white-text{
+    color: aliceblue;
 
-    background-color: blue;
-    color: #000000;
 }
 
-.dark-mode-header {
-
-    background-color: #3a332a;
-    color: #ffffff;
+.black-text{
+    color: black;
 }
+
 
 .light-mode .navbar li:hover {
 

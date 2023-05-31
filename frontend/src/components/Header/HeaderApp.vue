@@ -11,9 +11,9 @@
         <li @click="redirectToGraphGenerator">
           <a href="#" :class="{ 'textNavBar_Dark': isDarkMode, 'textNavBar': !isDarkMode }"><b>Graph Generator</b></a>
         </li>
-        <li @click="redirectToAbout">
+        <!-- <li @click="redirectToAbout">
           <a href="#" :class="{ 'textNavBar_Dark': isDarkMode, 'textNavBar': !isDarkMode }"><b>About</b></a>
-        </li>
+        </li> -->
       </navbar>
     </div>
   </div>
@@ -95,6 +95,8 @@ b {
   justify-content: flex-end;
   align-items: center;
 }
+
+
 
 .light-mode-header {
 

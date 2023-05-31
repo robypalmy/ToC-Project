@@ -1,20 +1,17 @@
 <!-- create a toolbar in vue with an input for a file -->
 <template>
-    <v-content :class="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }" class="v-content">
+  <v-content :class="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }" class="v-content">
     <v-container fill-height>
       <v-row style="margin: 0" justify="center">
         <v-col cols="auto">
-          <v-card width="45vw" height="40vh" raised>
-            <v-card-title><b>Select your file:</b></v-card-title>
+          <v-card :class="{ 'lightBackground': isDarkMode, 'darkBackground': !isDarkMode }" width="45vw" height="30vh"
+            raised>
+            <v-card-title :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }"><b>Select your
+                file:</b></v-card-title>
             <br>
-            <v-card-text class="inputContainer">                
-              <v-file-input
-                accept=".txt"
-                label="Click here to select a .txt file"
-                outlined
-                v-model="chosenFiles"
-                v-on:click="testFunction"
-              >
+            <v-card-text class="inputContainer">
+              <v-file-input accept=".txt" label="Click here to select a .txt file" outlined v-model="chosenFiles"
+                :class="{ 'inputboxlight': isDarkMode, 'inputboxdark': !isDarkMode }" v-on:click="testFunction">
               </v-file-input>
             </v-card-text>
             <v-card-actions class="btnContainer">
@@ -23,30 +20,33 @@
           </v-card>
         </v-col>
         <v-col cols="auto">
-          <v-card width="45vw" height="40vh" raised>
-            <v-card-title>File contents:</v-card-title>
-              <v-card-text class="ciao">
-                <p>{{ file_contents }}</p>
-                <!-- Display image here -->
-                <img :src="imageSrc" alt="Image from backend" v-if="imageSrc" />
-              </v-card-text>
+          <v-card :class="{ 'lightBackground': isDarkMode, 'darkBackground': !isDarkMode }" width="45vw" height="51vh"
+            class="cardContainer" raised>
+            <v-card-title :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }"><b>File
+                contents:</b></v-card-title>
+            <v-card-text class="cardText">
+              <p class="file_contents" :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }">{{ file_contents
+              }}</p>
+              <!-- Display image here -->
+              <img class="imgOutput" style="max-height: 300px" :src="imageSrc" alt="Image from backend" v-if="imageSrc" />
+            </v-card-text>
           </v-card>
         </v-col>
+
       </v-row>
     </v-container>
   </v-content>
 
 
-    <div v-if="showPopup" class="popup-overlay">
-      <div class="popup-content">
-        <h2>Error in the upload of the file</h2>
-        <p>Please make sure you uploaded in a right way the file</p>
-        <button @click="closePopup"><b>Close</b></button>
-      </div>
+  <div v-if="showPopup" class="popup-overlay">
+    <div class="popup-content">
+      <h2>Error in the upload of the file</h2>
+      <p>Please make sure you uploaded in a right way the file</p>
+      <button @click="closePopup"><b>Close</b></button>
     </div>
+  </div>
 
-  <DarkModeSwitch/>
-
+  <DarkModeSwitch />
 </template>
 
 <script>
@@ -102,14 +102,14 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         })
-        .then(response => {
-          console.log(response);
-          this.file_contents = response.data.file_contents;
-          this.imageSrc = 'http://127.0.0.1:5001' + response.data.image_path; 
-        })
-        .catch(error => {
-          console.error(error);
-        });
+          .then(response => {
+            console.log(response);
+            this.file_contents = response.data.file_contents;
+            this.imageSrc = 'http://127.0.0.1:5001' + response.data.image_path;
+          })
+          .catch(error => {
+            console.error(error);
+          });
       }
     }
   }
@@ -120,7 +120,6 @@ export default {
 </script>
 
 <style scoped>
-
 /* Pop-up Style */
 
 .popup-overlay {
@@ -160,7 +159,8 @@ export default {
   height: 15%;
   width: 40%;
   border-radius: 20px;
-  color: black;}
+  color: black;
+}
 
 
 /* End of pop-up error style */
@@ -178,6 +178,19 @@ export default {
 
 }
 
+div.v-card-text.inputContainer>div>div.v-input__prepend {
+  width: 0%;
+}
+
+.darkBackground {
+
+  background-color: rgb(255, 255, 255);
+}
+
+.lightBackground {
+  background-color: rgb(59, 56, 51);
+}
+
 .outputContainer {
 
   height: 100%;
@@ -186,19 +199,8 @@ export default {
 
 }
 
-.file-card {
-  margin: 20px;
-  padding: 20px;
-}
-
-.card-title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.read-btn {
-  color: white;
-  background-color: #1976d2;
+v-card-title {
+  text-align: center;
 }
 
 .btnContainer {
@@ -214,10 +216,70 @@ export default {
   background-color: rgb(48, 189, 48);
   border-radius: 20px;
   width: 30%;
-  height: 40px;
+  height: 100%;
+}
+
+v-btn {
+  height: 20%;
 }
 
 p {
   white-space: pre-wrap;
 }
+
+.inputboxlight {
+  color: rgb(255, 255, 255);
+}
+
+.inputboxdark {
+  color: rgb(59, 56, 51);
+}
+
+.ciao {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.2fr 0.8fr;
+  grid-template-areas:
+    "textSat"
+    "imgOut"
+
+}
+
+.file_contents {
+  grid-area: textSat;
+}
+
+
+.imgOutput {
+  grid-area: imgOut;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow: auto; /* Ensures content doesn't overflow */
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow: auto; /* Ensures content doesn't overflow */
+  width: 100%;
+  height: 100%;
+  padding: 10px; /* Adds some padding inside the card */
+}
+
+.imgOutput {
+  max-width: 100%; /* Ensures image doesn't overflow */
+  object-fit: contain;
+}
+
 </style>
