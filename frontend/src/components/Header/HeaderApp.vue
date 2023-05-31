@@ -1,29 +1,40 @@
 <template>
-  <div app class="container">
+  <div app class="containerHeader" :class="{ 'dark-mode-header': isDarkMode, 'light-mode-header': !isDarkMode }">
     <div class="logo">
-      <img class="logo-image" src="../../assets/VettorialeLogo.png" alt="logo" @click="redirectToHome"  >
+      <img class="logo-image" :src="logoSrc" alt="logo" @click="redirectToHome">
     </div>
     <div class="navbarContainer">
       <navbar class="navbar">
         <li @click="redirectToHome">
-          <a href="#"><b>Home</b></a>
+          <a href="#" :class="{ 'textNavBar_Dark': isDarkMode, 'textNavBar': !isDarkMode }"><b>Home</b></a>
         </li>
         <li @click="redirectToGraphGenerator">
-          <a href="#"><b>Graph Generator</b></a>
+          <a href="#" :class="{ 'textNavBar_Dark': isDarkMode, 'textNavBar': !isDarkMode }"><b>Graph Generator</b></a>
         </li>
         <li @click="redirectToAbout">
-          <a href="#"><b>About</b></a>
+          <a href="#" :class="{ 'textNavBar_Dark': isDarkMode, 'textNavBar': !isDarkMode }"><b>About</b></a>
         </li>
       </navbar>
     </div>
   </div>
-  
 </template>
 
 <script>
 
+import EventBus from '../../js/event-bus.js';
+
 export default {
   name: 'HeaderApp',
+  computed: {
+    isDarkMode() {
+      return EventBus.isDarkMode.value;
+    },
+    logoSrc() {
+      return this.isDarkMode
+        ? require('@/assets/VettorialeLogoWhite.png')
+        : require('@/assets/VettorialeLogo.png')
+    },
+  },
   methods: {
     redirectToHome() {
       this.$router.push('/');
@@ -42,8 +53,7 @@ export default {
 </script>
 
 <style scoped>
-
-.container {
+.containerHeader {
   height: 10vh;
   min-height: 10vh;
   width: 100vw;
@@ -67,11 +77,15 @@ export default {
   align-items: center;
 }
 
+b {
+  font-weight: bold;
+}
+
 .logo-image {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 
 .navbarContainer {
   height: 10vh;
@@ -82,8 +96,47 @@ export default {
   align-items: center;
 }
 
-.navbar {
+.light-mode-header {
 
+background-color: beige;
+
+}
+
+.dark-mode-header {
+
+background-color: #3a332a;
+
+}
+
+
+.navbar li a {
+  text-decoration: none;
+  font-size: 1.2em;
+  list-style: none;
+}
+
+
+.navbar li:hover {
+  background-color: rgb(157, 141, 94);
+  transition-delay: 0.12s;
+  list-style: none;
+}
+
+
+
+.textNavBar_Dark {
+  color: beige;
+}
+
+
+.textNavBar {
+  color: black;
+  font-weight: bold;
+}
+
+
+.navbar {
+  
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -96,7 +149,7 @@ export default {
 }
 
 .navbar li {
-  list-style: none; 
+  list-style: none;
   height: 60%;
   width: 30%;
   display: flex;
@@ -105,20 +158,6 @@ export default {
   align-items: center;
   border-radius: 10%;
 }
-
-
-.navbar li a {
-  text-decoration: none; /* Remove the default link underline */
-  color: black; /* Set the color of the navbar links */
-  font-size: 1.2em;
-}
-
-
-.navbar li:hover {
-  background-color: rgb(157, 141, 94); /* Set the background color for hover effect */
-  transition-delay: 0.12s; 
-}
-
 
 
 </style>

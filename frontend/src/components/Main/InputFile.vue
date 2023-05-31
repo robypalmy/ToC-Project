@@ -1,6 +1,6 @@
 <!-- create a toolbar in vue with an input for a file -->
 <template>
-    <v-content class="v-content">
+    <v-content :class="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }" class="v-content">
     <v-container fill-height>
       <v-row style="margin: 0" justify="center">
         <v-col cols="auto">
@@ -45,14 +45,21 @@
       </div>
     </div>
 
+  <DarkModeSwitch/>
+
 </template>
 
 <script>
 
 import axios from 'axios';
+import EventBus from '../../js/event-bus.js';
+import DarkModeSwitch from '../DarkModeSwitch/DarkModeSwitch.vue';
 
 export default {
   name: 'InputFile',
+  components: {
+    DarkModeSwitch
+  },
   props: {
     msg: String
   },
@@ -64,6 +71,11 @@ export default {
       imageSrc: null,
       resultString: null
     };
+  },
+  computed: {
+    isDarkMode() {
+      return EventBus.isDarkMode.value;
+    },
   },
   methods: {
     closePopup() {
@@ -161,6 +173,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
 
 
 }
