@@ -1,2 +1,0 @@
-SATISFIABLE
-8 1 2 9 5 4 6 7 3 0 
