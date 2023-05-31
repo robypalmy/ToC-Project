@@ -1,7 +1,7 @@
 <template>
   <div app class="container">
     <div class="logo">
-      <h1> Formula Hamilton </h1>
+      <img class="logo-image" src="../../assets/VettorialeLogo.png" alt="logo" @click="redirectToHome"  >
     </div>
     <div class="navbarContainer">
       <navbar class="navbar">
@@ -57,6 +57,8 @@ export default {
 
 .logo {
   height: 10vh;
+  width: 30vw;
+  max-width: 30vw;
   min-height: 10vh;
   display: flex;
   position: absolute;
@@ -64,6 +66,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
+.logo-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
 
 .navbarContainer {
   height: 10vh;
@@ -80,7 +88,7 @@ export default {
   justify-content: space-around;
   align-items: center;
   height: 10vh;
-  width: 30vw;
+  width: 40vw;
   text-align: center;
   margin-right: 10px;
   min-height: 10vh;
