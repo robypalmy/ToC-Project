@@ -30,4 +30,5 @@ export default {
   min-width: 100vw;
 }
 
+
 </style>

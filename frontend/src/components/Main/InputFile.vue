@@ -28,7 +28,8 @@
               <p class="file_contents" :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }">{{ file_contents
               }}</p>
               <!-- Display image here -->
-              <img class="imgOutput" style="max-height: 300px" :src="imageSrc" alt="Image from backend" v-if="imageSrc" />
+              <img class="imgOutput" style="max-height: 300px" :src="imageSrc" :key="imageSrc" alt="Image from backend"
+                v-if="imageSrc" />
             </v-card-text>
           </v-card>
         </v-col>
@@ -97,6 +98,9 @@ export default {
         let formData = new FormData();
         formData.append('file', file);
 
+        this.imageSrc = null;
+
+
         axios.post('http://127.0.0.1:5001/api/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -104,12 +108,15 @@ export default {
         })
           .then(response => {
             console.log(response);
+            console.log('Image Path:', 'http://127.0.0.1:5001' + response.data.image_path); // Check if the URL is correct
             this.file_contents = response.data.file_contents;
             this.imageSrc = 'http://127.0.0.1:5001' + response.data.image_path;
           })
           .catch(error => {
             console.error(error);
+            this.imageSrc = null;
           });
+
       }
     }
   }
@@ -263,7 +270,8 @@ p {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  overflow: auto; /* Ensures content doesn't overflow */
+  overflow: auto;
+  /* Ensures content doesn't overflow */
 }
 
 .cardText {
@@ -271,15 +279,17 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  overflow: auto; /* Ensures content doesn't overflow */
+  overflow: auto;
+  /* Ensures content doesn't overflow */
   width: 100%;
   height: 100%;
-  padding: 10px; /* Adds some padding inside the card */
+  padding: 10px;
+  /* Adds some padding inside the card */
 }
 
 .imgOutput {
-  max-width: 100%; /* Ensures image doesn't overflow */
+  max-width: 100%;
+  /* Ensures image doesn't overflow */
   object-fit: contain;
 }
-
 </style>

@@ -1,31 +1,31 @@
 <!-- create a toolbar in vue with an input for a file -->
 <template>
-  <v-content class="v-content">
+  <v-content :class="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }" class="v-content">
     <v-container fill-height>
       <v-row style="margin: 0" justify="center">
         <v-col cols="auto">
-          <v-card class="v-card" raised>
-            <v-card-title><b>Graph Generator</b></v-card-title>
+          <v-card :class="{ 'lightBackground': isDarkMode, 'darkBackground': !isDarkMode }" class="v-card" raised>
+            <v-card-title :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }"><b>Graph Generator</b></v-card-title>
             <br>
             <v-card-text class="inputContainer">                
               <div class="inputGroupContainer">
                 <div id="NodesNumberContainer">
-                  <input type="text" id="NodesNumberInput" v-model="NodesInput" placeholder="Number of Nodes"/>
+                  <input type="text" :class="{ 'inputboxlight': isDarkMode, 'inputboxdark': !isDarkMode }" id="NodesNumberInput" v-model="NodesInput" placeholder="Number of Nodes"/>
                 </div>
                 <div id="EdgesNumberContainer">
-                  <input type="text" id="EdgesNumberInput" v-model="EdgesInput" placeholder="Number of Edges"/>
+                  <input type="text" :class="{ 'inputboxlight': isDarkMode, 'inputboxdark': !isDarkMode }" id="EdgesNumberInput" v-model="EdgesInput" placeholder="Number of Edges"/>
                 </div>
                 <div id="FileNameContainer">
-                  <input type="text" id="FileNameInput" v-model="FileNameInput" placeholder="File Name"/>
+                  <input type="text" style="color:black" id="FileNameInput" v-model="FileNameInput" placeholder="File Name"/>
                 </div>
                 <div id="Hamiltonian">
-                  <label>
+                  <label id="label">
                     <input type="checkbox" v-model="isCheckedA" @change="handleCheckboxChange('A')" />
                     <b>Hamiltonian Cycle</b>
                   </label>
                 </div>
                 <div id="Random">
-                  <label>
+                  <label id="label">
                     <input type="checkbox" v-model="isCheckedB" @change="handleCheckboxChange('B')" />
                     <b>Random</b>
                   </label>
@@ -38,10 +38,11 @@
           </v-card>
         </v-col>
         <v-col cols="auto">
-          <v-card width="45vw" height="40vh" raised>
-            <v-card-title><b>File contents:</b></v-card-title>
-            <v-card-text><p>{{file_contents}}</p></v-card-text>
-            <img :src="imageSrc" alt="Image from backend" v-if="imageSrc" />
+          <v-card :class="{ 'lightBackground': isDarkMode, 'darkBackground': !isDarkMode }" width="45vw" height="41vh" raised>
+            <v-card-title :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }" ><b>File contents:</b></v-card-title>
+            <v-card-text :class="{ 'white-text': isDarkMode, 'black-text': !isDarkMode }"><p>{{file_contents}}</p></v-card-text>
+            <img class="imgOutput" style="max-height: 300px" :src="imageSrc" :key="imageSrc" alt="Image from backend"
+                v-if="imageSrc" />
           </v-card>
         </v-col>
       </v-row>
@@ -57,15 +58,27 @@
     </div>
   </div>
 
+  <DarkModeSwitch/>
+
 </template>
 
 <script>
 import axios from 'axios';
+import EventBus from '../../js/event-bus.js';
+import DarkModeSwitch from '../DarkModeSwitch/DarkModeSwitch.vue';
 export default {
 name: 'GraphGeneratorInputFile',
+components: {
+  DarkModeSwitch
+},
 props: {
   msg: String
 },
+computed: {
+    isDarkMode() {
+      return EventBus.isDarkMode.value;
+    },
+  },
 data () {
   return {
     file_contents: null,
@@ -159,6 +172,14 @@ backdrop-filter: blur(5px);
 z-index: 999;
 }
 
+#label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap:20px;
+}
+
 .popup-content {
 height: 35vh;
 width: 35vw;
@@ -232,6 +253,32 @@ align-items: center;
 padding: 0;
 justify-content: center;
 
+}
+
+
+div.v-card-text.inputContainer>div>div.v-input__prepend {
+  width: 0%;
+}
+
+.darkBackground {
+
+  background-color: rgb(255, 255, 255);
+}
+
+.lightBackground {
+  background-color: rgb(59, 56, 51);
+}
+
+.outputContainer {
+
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+}
+
+v-card-title {
+  text-align: center;
 }
 .inputGroupContainer {
 width: 40vw;
@@ -352,7 +399,72 @@ width: 30%;
 height: 40px;
 }
 
-p {
-white-space: pre-wrap;
+v-btn {
+  height: 20%;
 }
+
+p {
+  white-space: pre-wrap;
+}
+
+.inputboxlight {
+  color: rgb(255, 255, 255);
+}
+
+.inputboxdark {
+  color: rgb(59, 56, 51);
+}
+
+.ciao {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.2fr 0.7fr;
+  grid-template-areas:
+    "textSat"
+    "imgOut"
+
+}
+
+.file_contents {
+  grid-area: textSat;
+}
+
+
+.imgOutput {
+  grid-area: imgOut;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow: auto;
+  /* Ensures content doesn't overflow */
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow: auto;
+  /* Ensures content doesn't overflow */
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  /* Adds some padding inside the card */
+}
+
+.imgOutput {
+  max-width: 100%;
+  /* Ensures image doesn't overflow */
+  object-fit: contain;
+}
+
+
 </style>
